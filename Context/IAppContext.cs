@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Context
 {
-    public interface IContext
+    public interface IAppContext
     {
         void TesteInterface();
     }

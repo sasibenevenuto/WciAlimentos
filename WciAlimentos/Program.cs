@@ -1,9 +1,19 @@
+using Microsoft.EntityFrameworkCore;
+using Model.General;
+
 var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+IConfiguration configuration = app.Configuration;
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
+builder.Services.Configure<Settings>(options => configuration.GetSection("Settings").Bind(options));
+
+var connection = configuration["ConexaoMySql:ConnectionString"];
+
+builder.Services.AddDbContext<Context.AppContext>(opt => opt.UseSqlServer(connection));
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
